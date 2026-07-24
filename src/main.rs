@@ -1,6 +1,7 @@
 use std::time::{Duration, Instant};
 
-use tetrotui::{config, state::{self, ActivePiece, Board, GameState, PieceKind}};
+use crossterm::event::KeyCode;
+use tetrotui::{config, input, render, state::{self, ActivePiece, Board, GameState, PieceKind}};
 
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
@@ -12,15 +13,7 @@ fn main() -> color_eyre::Result<()> {
 
     let tick_interval = Duration::from_millis(16);
     let mut last_tick = Instant::now();
-
-    loop {
-        let now = Instant::now();
-        let elapsed = now.duration_since(last_tick);
-        let remaining = tick_interval.saturating_sub(elapsed);
-
-        let key = input::poll(remaining);
-    }
-
+    
     let active_piece = ActivePiece {
         kind: PieceKind::T,
         rotation: 0,
@@ -38,5 +31,19 @@ fn main() -> color_eyre::Result<()> {
         drop_timer: Duration::ZERO,
     };
 
+    loop {
+        let now = Instant::now();
+        let elapsed = now.duration_since(last_tick);
+        let remaining = tick_interval.saturating_sub(elapsed);
+        let key = input::poll(remaining);
+        
+        if let Some(k) = key {
+            if k.code == KeyCode::Char('q') { break; }
+        }
+
+        terminal.draw(|frame| render::draw(&game_state, frame))?;
+    }
+
+    ratatui::restore();
     Ok(())
 }

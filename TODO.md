@@ -8,13 +8,13 @@ Tune input-feel in `--release` only (debug frame times lie).
 ## Phase 0 — Foundation (do before Phase 1)
 
 - [x] Pick crates: `ratatui`, `crossterm` (backend), `rand` (bag), a config loader (`toml` + `serde`).
-- [ ] Module layout enforcing the state/render split:
+- [x] Module layout enforcing the state/render split:
   - [x] `state` module — `Board`, `GameState`, pieces. **No ratatui types here, ever.**
   - [x] `render` module — function over `&GameState` → ratatui `Frame`.
   - [x] `input` module — non-blocking poll each frame.
   - [x] `config` module — DAS/ARR + tuning, loaded from file day one.
-  - [ ] `main` — terminal setup/teardown, the loop.
-- [ ] Config struct + config file loaded at startup (even if only 2 fields now).
+  - [x] `main` — terminal setup/teardown, the loop.
+- [x] Config struct + config file loaded at startup (even if only 2 fields now).
 - [x] Fixed-tick game loop: gravity + timers on tick, input polled non-blocking. **Loop not driven by input.**
 
 ---
