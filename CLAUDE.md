@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-`tetro` — a Tetris implementation in the terminal (ratatui) built to modern guideline mechanics. The point is *feel*: SRS rotation with wall kicks, 7-bag randomization, lock delay with move-reset, and tunable DAS/ARR. Anyone can render a grid and drop blocks; the project is the gap between that and something that plays correctly under a competent player's hands.
+`tetrotui` — a Tetris implementation in the terminal (ratatui) built to modern guideline mechanics. The point is *feel*: SRS rotation with wall kicks, 7-bag randomization, lock delay with move-reset, and tunable DAS/ARR. Anyone can render a grid and drop blocks; the project is the gap between that and something that plays correctly under a competent player's hands.
 
 Rendering targets near-square cells. Terminal cells are roughly 1:2, so a naive one-cell-per-block board is stretched vertically in a way players feel before they can name it. Phase 1 solves this with two-column-wide blocks; the endgame is half-block characters (`▀` with distinct fg/bg) for two vertical pixels per cell.
 
