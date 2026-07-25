@@ -34,7 +34,7 @@ fn main() -> color_eyre::Result<()> {
         let elapsed = now.duration_since(last_tick);
         let remaining = tick_interval.saturating_sub(elapsed);
         let key = input::poll(remaining);
-
+        
         terminal.draw(|frame| render::draw(&game_state, frame))?;
 
         if let Some(k) = key {

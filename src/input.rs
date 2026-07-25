@@ -10,6 +10,6 @@ pub fn poll(timeout: Duration) -> Option<KeyEvent> {
     let evt = event::read().ok()?;
     match evt {
         Event::Key(k) => Some(k),
-            _ => None
+        _ => None
     }
 }

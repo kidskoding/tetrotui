@@ -1,15 +1,31 @@
-use ratatui::{Frame, style::{Color, Style}, text::{Line, Span}};
+use ratatui::{Frame, layout::{Alignment, Rect}, style::{Color, Style}, text::{Line, Span}, widgets::{Paragraph, Wrap}};
 
 use crate::state::{GameState, HEIGHT, HIDDEN_HEIGHT, PieceKind, WIDTH};
 
 pub fn draw(state: &GameState, frame: &mut Frame) {
+    let area = frame.area();
+    const MIN_WIDTH: usize = 24;
+    const MIN_HEIGHT: usize = 30;
+
+    if area.width < MIN_WIDTH as u16 || area.height < MIN_HEIGHT as u16 {
+        let h: u16 = 3;
+        let y = area.y + area.height.saturating_sub(h) / 2;
+        let rect = Rect::new(area.x, y, area.width, h);
+
+        let paragraph = Paragraph::new("terminal dimensions required: 24x30!")
+            .wrap(Wrap { trim: true })
+            .alignment(Alignment::Center);
+        frame.render_widget(paragraph, rect);
+        return;
+    }
+    
     let mut vec_outer: Vec<Line> = vec![];
     for r in HIDDEN_HEIGHT..HEIGHT {
         let mut vec_inner: Vec<Span> = vec![];
         for c in 0..WIDTH {
             let cell = state.board.cells[r][c];
             let span = match cell {
-                Some(kind) => Span::styled("██", Style::default().fg(color(kind))),
+                Some(kind) => Span::styled("██", Style::default().fg(get_color(kind))),
                 None => Span::raw("  "),
             };
 
@@ -17,9 +33,18 @@ pub fn draw(state: &GameState, frame: &mut Frame) {
         }
         vec_outer.push(Line::from(vec_inner))
     }
+
+    let rect = Rect::new(
+        area.x + (area.width - WIDTH as u16) / 2,
+        area.y + (area.height - HEIGHT as u16) / 2,
+        WIDTH as u16,
+        HEIGHT as u16
+    );
+
+    frame.render_widget(Paragraph::new(vec_outer), area);
 }
 
-pub fn color(kind: PieceKind) -> Color {
+pub fn get_color(kind: PieceKind) -> Color {
     match kind {
         PieceKind::I => Color::Cyan,
         PieceKind::O => Color::Yellow,

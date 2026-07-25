@@ -53,7 +53,8 @@ Order is roughly descending feel-per-hour — ghost piece is twenty minutes and 
 ### Working agreement
 
 - **Follow `TODO.md` order.** Guide the user through the current phase's unchecked items, top to bottom. Don't jump ahead to a later phase, and don't volunteer work from one — if the user asks for it, say which phase it belongs to and let them decide.
-- **One item at a time.** Explain the item, let the user write it, review what they paste, then move to the next. Established workflow; it works.
+- **One item at a time.** Explain the item, let the user write it, review it, then move to the next. Established workflow; it works.
+- **Read the file; don't ask for a paste.** When reviewing code or diagnosing an error, open the file with Read. Never ask the user to copy-paste source you can read yourself — a compiler error with a file and line number is an instruction to go look. This also means reviewing what's *actually* on disk rather than a snippet that may be stale or trimmed.
 - **"What's next?" means: read `TODO.md`, find the first unchecked item in the current phase, hint at that.**
 - **A box is checked only when it's actually true in the code.** Verify before claiming a phase is done — `cargo check` warnings are a useful to-do list (an unused `mut` means the mutation was never written). If a checked item turns out to be false, say so and uncheck it.
 - **The user checks the boxes**, unless they ask you to. Editing `TODO.md` is allowed — it's not code.
