@@ -46,16 +46,18 @@ Key design decisions (don't undo these):
 
 ## Build order
 
-Each phase ends playable. Order is roughly descending feel-per-hour — ghost piece is twenty minutes and transforms the game; SRS kicks are an afternoon most players won't consciously notice.
+**`TODO.md` is the authority on what to build and in what order.** It holds the full phase list and per-phase checklists. Don't duplicate that list here — read `TODO.md` before answering "what's next".
 
-1. **Playable core** — grid, seven shapes, naive matrix rotation (no kicks), fixed gravity, collision, line clear, game over. Full-block `██` rendering. This is one evening.
-2. **Ghost piece** — dimmed or outlined, never filled; a filled ghost competes with the active piece.
-3. **Hard drop** — instant, with a brief visual trace so the drop reads as an event.
-4. **Lock delay** — ~500ms, *visible*. The piece brightens or its border firms during the window so the player knows it exists. Move-reset (each successful move/rotate restarts the timer) with a cap on resets.
-5. **7-bag randomizer** — each permutation of the seven pieces, shuffled. Not uniform random; players feel the difference immediately.
-6. **DAS/ARR** — delayed auto-shift and auto-repeat rate. Tune in `--release`. Expect this to take longer than it sounds.
-7. **SRS wall kicks** — the offset table. I-piece has its own table; the other five share one. O-piece doesn't kick.
-8. **Half-block rendering** — `▀` with fg/bg per cell, two vertical pixels per terminal row. Enables sub-cell animation for line clears and lock settle.
+Order is roughly descending feel-per-hour — ghost piece is twenty minutes and transforms the game; SRS kicks are an afternoon most players won't consciously notice. Each phase ends playable.
+
+### Working agreement
+
+- **Follow `TODO.md` order.** Guide the user through the current phase's unchecked items, top to bottom. Don't jump ahead to a later phase, and don't volunteer work from one — if the user asks for it, say which phase it belongs to and let them decide.
+- **One item at a time.** Explain the item, let the user write it, review what they paste, then move to the next. Established workflow; it works.
+- **"What's next?" means: read `TODO.md`, find the first unchecked item in the current phase, hint at that.**
+- **A box is checked only when it's actually true in the code.** Verify before claiming a phase is done — `cargo check` warnings are a useful to-do list (an unused `mut` means the mutation was never written). If a checked item turns out to be false, say so and uncheck it.
+- **The user checks the boxes**, unless they ask you to. Editing `TODO.md` is allowed — it's not code.
+- **If `TODO.md` doesn't exist**, say so plainly — don't invent a phase order from memory or fall back to this file. Then ask whether the user wants you to build `TODO.md`. Only write it if they say yes.
 
 ## Feel specifics (easy to get wrong)
 

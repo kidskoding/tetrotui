@@ -1,13 +1,13 @@
-use std::time::{Duration, Instant};
+use std::{io, time::{Duration, Instant}};
 
-use crossterm::event::KeyCode;
+use crossterm::event::{KeyCode, KeyEvent};
 use tetrotui::{config, input, render, state::{self, ActivePiece, Board, GameState, PieceKind}};
 
 fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
-
     let config = config::load()
         .unwrap_or_default();
+
     let mut terminal = ratatui::init();
     let grid = vec![vec![None; state::WIDTH]; state::HEIGHT];
 
@@ -19,11 +19,9 @@ fn main() -> color_eyre::Result<()> {
         rotation: 0,
         origin: (0, 0),
     };
-
     let board = Board {
         cells: grid,
     };
-
     let mut game_state = GameState {
         board,
         active: active_piece,
@@ -36,12 +34,18 @@ fn main() -> color_eyre::Result<()> {
         let elapsed = now.duration_since(last_tick);
         let remaining = tick_interval.saturating_sub(elapsed);
         let key = input::poll(remaining);
-        
-        if let Some(k) = key {
-            if k.code == KeyCode::Char('q') { break; }
-        }
 
         terminal.draw(|frame| render::draw(&game_state, frame))?;
+
+        if let Some(k) = key {
+            if k.code == KeyCode::Char('q') {
+                break;
+            }
+        }
+
+        if last_tick.elapsed() >= tick_interval {
+            last_tick += tick_interval;
+        }
     }
 
     ratatui::restore();
