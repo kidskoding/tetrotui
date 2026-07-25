@@ -30,6 +30,7 @@ Tune input-feel in `--release` only (debug frame times lie).
   - [x] Size guard first: below min → "needs 24×30", early return (avoids `u16` underflow on centering math).
   - [x] Centered `Rect` (`WIDTH * 2` wide × `VISIBLE_HEIGHT` tall) + `frame.render_widget`.
   - [x] Hand-seed cells in `main` to confirm it actually draws.
+  - [ ] Border around the playfield: `Block::bordered()` on the board `Paragraph`. **Bump the rect to `WIDTH*2 + 2` × `VISIBLE_HEIGHT + 2`** — a border eats one cell per side and will silently clip 2 columns/rows otherwise. Desaturated border style (`DarkGray`), pieces stay the only saturated thing.
 - [x] Piece base shapes: one flat (rotation 0) shape per kind. Box sizes: I = 4×4, O = 2×2, rest = 3×3. **Wrong box size = piece drifts on rotate.**
 - [ ] Spawn: flat orientation, in the two rows above visible field. Get position exact.
 - [ ] Naive matrix rotation (NO kicks yet). Rotate the offsets, not the origin.
