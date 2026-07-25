@@ -24,14 +24,20 @@ Tune input-feel in `--release` only (debug frame times lie).
 - [x] Grid: fixed-size `Vec`/array of `Option<PieceKind>`. 10 wide × 20 visible + hidden spawn rows above.
 - [x] Seven `PieceKind` (I O T S Z J L) with the 7 canonical colors (cyan/yellow/purple/green/red/blue/orange).
 - [x] Active piece = kind + rotation index (0–3) + origin. **Store index, not rotated matrix.**
-- [ ] Naive matrix rotation (NO kicks yet).
+- [ ] Full-block `██` rendering (two columns per cell). *In progress — `render.rs` builds `Vec<Line>`; still needs `Paragraph` + `Rect` + `render_widget`.*
+  - [x] `color(PieceKind) -> Color` mapping lives in `render.rs`, not `state.rs`.
+  - [x] Cell → `Span`, row → `Line`, board → `Vec<Line>`; visible rows only (`HIDDEN_HEIGHT..HEIGHT`).
+  - [ ] Size guard first: below min → "needs 24×30", early return (avoids `u16` underflow on centering math).
+  - [ ] Centered `Rect` (`WIDTH * 2` wide × `VISIBLE_HEIGHT` tall) + `frame.render_widget`.
+  - [ ] Hand-seed cells in `main` to confirm it actually draws.
+- [ ] Piece base shapes: one flat (rotation 0) shape per kind. Box sizes: I = 4×4, O = 2×2, rest = 3×3. **Wrong box size = piece drifts on rotate.**
+- [ ] Spawn: flat orientation, in the two rows above visible field. Get position exact.
+- [ ] Naive matrix rotation (NO kicks yet). Rotate the offsets, not the origin.
 - [ ] Collision check (walls, floor, settled cells).
-- [ ] Fixed gravity drop.
+- [ ] Fixed gravity drop (`GameState.drop_timer` exists, unused).
 - [ ] Lock on landing → merge into grid.
 - [ ] Line clear detection + row collapse.
 - [ ] Game over (spawn blocked).
-- [ ] Full-block `██` rendering (two columns per cell).
-- [ ] Spawn: flat orientation, in the two rows above visible field. Get position exact.
 - [ ] Resize handling: recompute layout + redraw; below min size → "needs 24×30" message.
 
 ---
