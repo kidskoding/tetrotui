@@ -27,6 +27,27 @@ pub enum PieceKind {
     J,
     L,
 }
+impl PieceKind {
+    pub fn bounding_box(&self) -> usize {
+        match self {
+            PieceKind::I => 4,
+            PieceKind::O => 2,
+            PieceKind::T | PieceKind::S | PieceKind::Z | PieceKind::J | PieceKind::L => 3,
+        }
+    }
+
+    pub fn cells(&self) -> [(i32, i32); 4] {
+        match self {
+            PieceKind::T => [(1,0), (1,1), (1,2), (0,1)],
+            PieceKind::Z => [(0,0), (0,1), (1,1), (1,2)],
+            PieceKind::S => [(1,0), (0,1), (0,2), (1,1)],
+            PieceKind::I => [(1,0), (1,1), (1,2), (1,3)],
+            PieceKind::O => [(0,0), (0,1), (1,0), (1,1)],
+            PieceKind::J => [(0,0), (1,0), (1,1), (1,2)],
+            PieceKind::L => [(1,0), (1,1), (1,2), (0,2)]
+        }
+    }
+}
 
 pub struct ActivePiece {
     pub kind: PieceKind,

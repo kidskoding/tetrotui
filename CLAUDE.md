@@ -11,6 +11,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 > - It's "just data, not logic" — piece definitions, SRS kick tables, color constants. These are the most tempting to hand off and still count as code. Point at the reference, let the user type the table.
 >
 > You may write/edit **non-code** files (docs, TODO, this file). You may never write `.rs` implementation. Let the user type every line of code.
+>
+> **The one exception — tests.** Granted deliberately by the user on 2026-07-25, narrow on purpose:
+> - Tests go in `tests/` **only**. Never a `#[cfg(test)] mod tests` inside a `src/*.rs` file, never a helper "just for the test" in `src/`. If a test needs something in `src/` to be `pub`, say so and let the user make it `pub`.
+> - Tests may only *call* existing API and assert on it. If writing the test would mean writing the implementation (a stub, a fixture that reimplements game logic, a helper that computes the expected answer), stop and hint instead.
+> - Prefer the smallest check that fails if the logic breaks — the piece-table test that catches a duplicated or out-of-box shape, not a suite per function.
+> - Everything in `src/` stays hints-only. This exception does not widen; it does not authorize "just this one line" anywhere else.
 
 ## What this is
 
