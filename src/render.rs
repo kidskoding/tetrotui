@@ -1,6 +1,6 @@
 use ratatui::{Frame, layout::{Alignment, Rect}, style::{Color, Style}, text::{Line, Span}, widgets::{Paragraph, Wrap}};
 
-use crate::state::{GameState, HEIGHT, HIDDEN_HEIGHT, PieceKind, WIDTH};
+use crate::state::{GameState, HEIGHT, HIDDEN_HEIGHT, PieceKind, VISIBLE_HEIGHT, WIDTH};
 
 pub fn draw(state: &GameState, frame: &mut Frame) {
     let area = frame.area();
@@ -35,13 +35,13 @@ pub fn draw(state: &GameState, frame: &mut Frame) {
     }
 
     let rect = Rect::new(
-        area.x + (area.width - WIDTH as u16) / 2,
-        area.y + (area.height - HEIGHT as u16) / 2,
-        WIDTH as u16,
-        HEIGHT as u16
+        area.x + (area.width - WIDTH as u16 * 2) / 2,
+        area.y + (area.height - VISIBLE_HEIGHT as u16) / 2,
+        WIDTH as u16 * 2,
+        VISIBLE_HEIGHT as u16
     );
 
-    frame.render_widget(Paragraph::new(vec_outer), area);
+    frame.render_widget(Paragraph::new(vec_outer), rect);
 }
 
 pub fn get_color(kind: PieceKind) -> Color {

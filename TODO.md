@@ -28,7 +28,7 @@ Tune input-feel in `--release` only (debug frame times lie).
   - [x] `color(PieceKind) -> Color` mapping lives in `render.rs`, not `state.rs`.
   - [x] Cell → `Span`, row → `Line`, board → `Vec<Line>`; visible rows only (`HIDDEN_HEIGHT..HEIGHT`).
   - [x] Size guard first: below min → "needs 24×30", early return (avoids `u16` underflow on centering math).
-  - [ ] Centered `Rect` (`WIDTH * 2` wide × `VISIBLE_HEIGHT` tall) + `frame.render_widget`.
+  - [x] Centered `Rect` (`WIDTH * 2` wide × `VISIBLE_HEIGHT` tall) + `frame.render_widget`.
   - [ ] Hand-seed cells in `main` to confirm it actually draws.
 - [ ] Piece base shapes: one flat (rotation 0) shape per kind. Box sizes: I = 4×4, O = 2×2, rest = 3×3. **Wrong box size = piece drifts on rotate.**
 - [ ] Spawn: flat orientation, in the two rows above visible field. Get position exact.
