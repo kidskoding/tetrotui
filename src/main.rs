@@ -1,6 +1,6 @@
-use std::{io, time::{Duration, Instant}};
+use std::time::{Duration, Instant};
 
-use crossterm::event::{KeyCode, KeyEvent};
+use crossterm::event::KeyCode;
 use tetrotui::{config, input, render, state::{self, ActivePiece, Board, GameState, PieceKind}};
 
 fn main() -> color_eyre::Result<()> {
@@ -9,10 +9,10 @@ fn main() -> color_eyre::Result<()> {
         .unwrap_or_default();
 
     let mut terminal = ratatui::init();
-    let grid = vec![vec![None; state::WIDTH]; state::HEIGHT];
-
-    let tick_interval = Duration::from_millis(16);
-    let mut last_tick = Instant::now();
+    let mut grid = vec![vec![None; state::WIDTH]; state::HEIGHT];
+    for c in 0..grid[state::HEIGHT - 1].len() {
+        grid[state::HEIGHT - 1][c] = Some(PieceKind::L);
+    }
     
     let active_piece = ActivePiece {
         kind: PieceKind::T,
@@ -29,6 +29,8 @@ fn main() -> color_eyre::Result<()> {
         drop_timer: Duration::ZERO,
     };
 
+    let tick_interval = Duration::from_millis(16);
+    let mut last_tick = Instant::now();
     loop {
         let now = Instant::now();
         let elapsed = now.duration_since(last_tick);
