@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 pub const WIDTH: usize = 10;
-pub const HIDDEN_HEIGHT: usize = 20;
+pub const HIDDEN_HEIGHT: usize = 2;
 pub const VISIBLE_HEIGHT: usize = 20;
 pub const HEIGHT: usize = HIDDEN_HEIGHT + VISIBLE_HEIGHT;
 

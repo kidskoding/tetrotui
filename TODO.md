@@ -21,9 +21,9 @@ Tune input-feel in `--release` only (debug frame times lie).
 
 ## Phase 1 — Playable core (one evening)
 
-- [ ] Grid: fixed-size `Vec`/array of `Option<PieceKind>`. 10 wide × 20 visible + hidden spawn rows above.
-- [ ] Seven `PieceKind` (I O T S Z J L) with the 7 canonical colors (cyan/yellow/purple/green/red/blue/orange).
-- [ ] Active piece = kind + rotation index (0–3) + origin. **Store index, not rotated matrix.**
+- [x] Grid: fixed-size `Vec`/array of `Option<PieceKind>`. 10 wide × 20 visible + hidden spawn rows above.
+- [x] Seven `PieceKind` (I O T S Z J L) with the 7 canonical colors (cyan/yellow/purple/green/red/blue/orange).
+- [x] Active piece = kind + rotation index (0–3) + origin. **Store index, not rotated matrix.**
 - [ ] Naive matrix rotation (NO kicks yet).
 - [ ] Collision check (walls, floor, settled cells).
 - [ ] Fixed gravity drop.
